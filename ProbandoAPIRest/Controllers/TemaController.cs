@@ -21,18 +21,26 @@ namespace ProbandoAPIRest.Controllers
         {
             return DTO.getTemas();
         }
+
+        [HttpPut]
+        [Route("temas-controller")]
+        public Response putTema(Request request)
+        {
+            return DTO.putTemas(request);
+        }
+
         [HttpPost]
         [Route("temas-controller")]
-        public string putTema()
+        public Response postTema(Request request)
         {
-            return "Actualizar Temas";
+            return DTO.postTema(request);
         }
 
         [HttpDelete]
         [Route("temas-controller")]
-        public string deleteTema()
+        public Response deleteTema(Request request)
         {
-            return "Borrar Tema";
+            return DTO.deleteTema(request);
         }
 
     }

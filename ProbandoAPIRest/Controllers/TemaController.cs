@@ -7,7 +7,15 @@ using System.Web.Http;
 
 namespace ProbandoAPIRest.Controllers
 {
+    [RoutePrefix("api/tema")]
     public class TemaController : ApiController
     {
+        [HttpGet]
+        [Route("getTemas")]
+        public List<string> get()
+        {
+            return new List<string> { "Terror", "Romance", "Aventura"};
+        }
+
     }
 }

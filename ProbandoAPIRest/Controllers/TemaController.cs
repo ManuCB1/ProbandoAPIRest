@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProbandoAPIRest.Models;
+using ProbandoAPIRest.Sql;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,15 +13,17 @@ namespace ProbandoAPIRest.Controllers
     public class TemaController : ApiController
     {
         //Peticiones a https://localhost:44371/api/tema/temas-controller
+        private DTO_Tema DTO = new DTO_Tema();
+
         [HttpGet]
         [Route("temas-controller")]
-        public string putTemas()
+        public List<Tema> getTemas()
         {
-            return "Insertando Tema con su EndPoint";
+            return DTO.getTemas();
         }
         [HttpPost]
         [Route("temas-controller")]
-        public string getTema()
+        public string putTema()
         {
             return "Actualizar Temas";
         }

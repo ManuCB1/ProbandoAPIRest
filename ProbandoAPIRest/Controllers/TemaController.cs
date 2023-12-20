@@ -10,11 +10,25 @@ namespace ProbandoAPIRest.Controllers
     [RoutePrefix("api/tema")]
     public class TemaController : ApiController
     {
+        //Peticiones a https://localhost:44371/api/tema/temas-controller
         [HttpGet]
-        [Route("getTemas")]
-        public List<string> get()
+        [Route("temas-controller")]
+        public string putTemas()
         {
-            return new List<string> { "Terror", "Romance", "Aventura"};
+            return "Insertando Tema con su EndPoint";
+        }
+        [HttpPost]
+        [Route("temas-controller")]
+        public string getTema()
+        {
+            return "Actualizar Temas";
+        }
+
+        [HttpDelete]
+        [Route("temas-controller")]
+        public string deleteTema()
+        {
+            return "Borrar Tema";
         }
 
     }

@@ -13,34 +13,34 @@ namespace ProbandoAPIRest.Controllers
     public class EdicionController : ApiController
     {
         //Peticiones a https://localhost:44371/api/edicion/edicion-controller
-        private DTO_Edicion DTO = new DTO_Edicion();
+        private DAO_Edicion DAO = new DAO_Edicion();
 
         [HttpGet]
         [Route("edicion-controller")]
         public List<Edicion> getEdiciones()
         {
-            return DTO.getEdiciones();
+            return DAO.getEdiciones();
         }
 
         [HttpPut]
         [Route("edicion-controller")]
         public Response putEdicion(Request request)
         {
-            return DTO.putEdicion(request);
+            return DAO.putEdicion(request);
         }
 
         [HttpPost]
         [Route("edicion-controller")]
         public Response postEdicion(Request request)
         {
-            return DTO.postEdicion(request);
+            return DAO.postEdicion(request);
         }
 
         [HttpDelete]
         [Route("edicion-controller")]
         public Response deleteEdicion(Request request)
         {
-            return DTO.deleteEdicion(request);
+            return DAO.deleteEdicion(request);
         }
     }
 }

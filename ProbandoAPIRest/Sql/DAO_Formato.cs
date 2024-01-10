@@ -6,28 +6,27 @@ using System.Web;
 
 namespace ProbandoAPIRest.Sql
 {
-    public class DTO_Tema : GetConnectionDAO
+    public class DAO_Formato : GetConnectionDAO
     {
-        public DTO_Tema()
+        public DAO_Formato()
         {
-            
         }
 
-        public List<Tema> getTemas()
+        public List<Formato> getFormatos()
         {
-            var listaTemas = new List<Tema>();
+            var listaFormatos = new List<Formato>();
             try
             {
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"call getTemas()";
+                cmd.CommandText = @"call getFormatos()";
                 connection.Open();
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var tema = new Tema();
-                    tema.Id = reader.GetFieldValue<int>(0);
-                    tema.Nombre = reader.GetFieldValue<string>(1);
-                    listaTemas.Add(tema);
+                    var formato = new Formato();
+                    formato.Id = reader.GetFieldValue<int>(0);
+                    formato.Nombre = reader.GetFieldValue<string>(1);
+                    listaFormatos.Add(formato);
                 }
             }
             catch (Exception ex)
@@ -35,16 +34,17 @@ namespace ProbandoAPIRest.Sql
                 throw new Exception(ex.Message);
             }
             finally { connection.Close(); }
-            return listaTemas;
+            return listaFormatos;
         }
 
-        public Response putTemas(Request request)
+        public Response putFormato(Request request)
         {
             var response = new Response();
             try
             {
                 var cmd = connection.CreateCommand();
-                var sql = @"call putTema('@nombre')";
+                var sql = @"call putFormato(@id, '@nombre')";
+                sql = sql.Replace("@id", request.Id.ToString());
                 sql = sql.Replace("@nombre", request.Nombre);
 
                 cmd.CommandText = sql;
@@ -52,10 +52,40 @@ namespace ProbandoAPIRest.Sql
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
-                response.OK = "Tema añadido correctamente.";
+                response.OK = "Formato actualizado correctamente.";
+
+                var formato = new Formato();
+                formato.Id = request.Id;
+                formato.Nombre = request.Nombre;
+                response.Data = formato;
+
             }
             catch (Exception ex)
-            { 
+            {
+                response.Error = "Error al actualizar." + ex.Message;
+            }
+            finally { connection.Close(); }
+            return response;
+        }
+
+        public Response postFormato(Request request)
+        {
+            var response = new Response();
+            try
+            {
+                var cmd = connection.CreateCommand();
+                var sql = @"call postFormato('@nombre')";
+                sql = sql.Replace("@nombre", request.Nombre);
+
+                cmd.CommandText = sql;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                response.OK = "Formato añadido correctamente.";
+            }
+            catch (Exception ex)
+            {
                 response.Error = "Error al insertar: " + ex.Message;
             }
             finally
@@ -65,44 +95,13 @@ namespace ProbandoAPIRest.Sql
             return response;
         }
 
-        public Response postTema(Request request)
+        public Response deleteFormato(Request request)
         {
             var response = new Response();
             try
             {
                 var cmd = connection.CreateCommand();
-                var sql = @"call postTema(@id, '@nombre')";
-                sql = sql.Replace("@id", request.Id.ToString());
-                sql = sql.Replace("@nombre", request.Nombre);
-
-                cmd.CommandText = sql;
-
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-                response.OK = "Tema actualizado correctamente.";
-
-                var tema = new Tema();
-                tema.Id = request.Id;
-                tema.Nombre = request.Nombre;
-                response.Data = tema;
-
-            }
-            catch(Exception ex)
-            {
-                response.Error = "Error al actualizar." + ex.Message;
-            }
-            finally { connection.Close(); }
-            return response;
-        }
-
-        public Response deleteTema(Request request)
-        {
-            var response = new Response();
-            try
-            {
-                var cmd = connection.CreateCommand();
-                var sql = @"call deleteTema(@id)";
+                var sql = @"call deleteFormato(@id)";
                 sql = sql.Replace("@id", request.Id.ToString());
 
                 cmd.CommandText = sql;
@@ -110,17 +109,15 @@ namespace ProbandoAPIRest.Sql
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
-                response.OK = "Tema eliminado con éxito.";
+                response.OK = "Formato eliminado con éxito.";
 
             }
             catch (Exception ex)
             {
-                response.Error = "Error al eliminar Tema: " + ex.Message;
+                response.Error = "Error al eliminar Formato: " + ex.Message;
             }
             finally { connection.Close(); }
             return response;
         }
-
-
     }
 }

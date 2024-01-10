@@ -6,9 +6,9 @@ using System.Web;
 
 namespace ProbandoAPIRest.Sql
 {
-    public class DTO_Edicion : GetConnectionDAO
+    public class DAO_Edicion : GetConnectionDAO
     {
-        public DTO_Edicion()
+        public DAO_Edicion()
         {
         }
 
@@ -43,34 +43,7 @@ namespace ProbandoAPIRest.Sql
             try
             {
                 var cmd = connection.CreateCommand();
-                var sql = @"call putEdicion('@nombre')";
-                sql = sql.Replace("@nombre", request.Nombre);
-
-                cmd.CommandText = sql;
-
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-                response.OK = "Edición añadido correctamente.";
-            }
-            catch (Exception ex)
-            {
-                response.Error = "Error al insertar: " + ex.Message;
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return response;
-        }
-
-        public Response postEdicion(Request request)
-        {
-            var response = new Response();
-            try
-            {
-                var cmd = connection.CreateCommand();
-                var sql = @"call postEdicion(@id, '@nombre')";
+                var sql = @"call putEdicion(@id, '@nombre')";
                 sql = sql.Replace("@id", request.Id.ToString());
                 sql = sql.Replace("@nombre", request.Nombre);
 
@@ -92,6 +65,33 @@ namespace ProbandoAPIRest.Sql
                 response.Error = "Error al actualizar." + ex.Message;
             }
             finally { connection.Close(); }
+            return response;
+        }
+
+        public Response postEdicion(Request request)
+        {
+            var response = new Response();
+            try
+            {
+                var cmd = connection.CreateCommand();
+                var sql = @"call postEdicion('@nombre')";
+                sql = sql.Replace("@nombre", request.Nombre);
+
+                cmd.CommandText = sql;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                response.OK = "Edición añadido correctamente.";
+            }
+            catch (Exception ex)
+            {
+                response.Error = "Error al insertar: " + ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
             return response;
         }
 

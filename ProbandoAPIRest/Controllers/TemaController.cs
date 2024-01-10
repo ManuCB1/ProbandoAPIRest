@@ -13,34 +13,34 @@ namespace ProbandoAPIRest.Controllers
     public class TemaController : ApiController
     {
         //Peticiones a https://localhost:44371/api/tema/temas-controller
-        private DTO_Tema DTO = new DTO_Tema();
+        private DAO_Tema DAO = new DAO_Tema();
 
         [HttpGet]
         [Route("temas-controller")]
         public List<Tema> getTemas()
         {
-            return DTO.getTemas();
+            return DAO.getTemas();
         }
 
         [HttpPut]
         [Route("temas-controller")]
         public Response putTema(Request request)
         {
-            return DTO.putTemas(request);
+            return DAO.putTemas(request);
         }
 
         [HttpPost]
         [Route("temas-controller")]
         public Response postTema(Request request)
         {
-            return DTO.postTema(request);
+            return DAO.postTema(request);
         }
 
         [HttpDelete]
         [Route("temas-controller")]
         public Response deleteTema(Request request)
         {
-            return DTO.deleteTema(request);
+            return DAO.deleteTema(request);
         }
 
     }

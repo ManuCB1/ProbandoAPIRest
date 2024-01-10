@@ -6,27 +6,27 @@ using System.Web;
 
 namespace ProbandoAPIRest.Sql
 {
-    public class DTO_Autor : GetConnectionDAO
+    public class DAO_Tema : GetConnectionDAO
     {
-        public DTO_Autor()
+        public DAO_Tema()
         {
         }
 
-        public List<Autor> getAutores()
+        public List<Tema> getTemas()
         {
-            var listaAutores = new List<Autor>();
+            var listaTemas = new List<Tema>();
             try
             {
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"call getAutores()";
+                cmd.CommandText = @"call getTemas()";
                 connection.Open();
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var autor = new Autor();
-                    autor.Id = reader.GetFieldValue<int>(0);
-                    autor.Nombre = reader.GetFieldValue<string>(1);
-                    listaAutores.Add(autor);
+                    var tema = new Tema();
+                    tema.Id = reader.GetFieldValue<int>(0);
+                    tema.Nombre = reader.GetFieldValue<string>(1);
+                    listaTemas.Add(tema);
                 }
             }
             catch (Exception ex)
@@ -34,16 +34,17 @@ namespace ProbandoAPIRest.Sql
                 throw new Exception(ex.Message);
             }
             finally { connection.Close(); }
-            return listaAutores;
+            return listaTemas;
         }
 
-        public Response putAutor(Request request)
+        public Response putTemas(Request request)
         {
             var response = new Response();
             try
             {
                 var cmd = connection.CreateCommand();
-                var sql = @"call putAutor('@nombre')";
+                var sql = @"call putTema(@id, '@nombre')";
+                sql = sql.Replace("@id", request.Id.ToString());
                 sql = sql.Replace("@nombre", request.Nombre);
 
                 cmd.CommandText = sql;
@@ -51,7 +52,37 @@ namespace ProbandoAPIRest.Sql
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
-                response.OK = "Autor añadido correctamente.";
+                response.OK = "Tema actualizado correctamente.";
+
+                var tema = new Tema();
+                tema.Id = request.Id;
+                tema.Nombre = request.Nombre;
+                response.Data = tema;
+
+            }
+            catch (Exception ex)
+            {
+                response.Error = "Error al actualizar." + ex.Message;
+            }
+            finally { connection.Close(); }
+            return response;
+        }
+
+        public Response postTema(Request request)
+        {
+            var response = new Response();
+            try
+            {
+                var cmd = connection.CreateCommand();
+                var sql = @"call postTema('@nombre')";
+                sql = sql.Replace("@nombre", request.Nombre);
+
+                cmd.CommandText = sql;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                response.OK = "Tema añadido correctamente.";
             }
             catch (Exception ex)
             {
@@ -64,44 +95,13 @@ namespace ProbandoAPIRest.Sql
             return response;
         }
 
-        public Response postAutor(Request request)
+        public Response deleteTema(Request request)
         {
             var response = new Response();
             try
             {
                 var cmd = connection.CreateCommand();
-                var sql = @"call postAutor(@id, '@nombre')";
-                sql = sql.Replace("@id", request.Id.ToString());
-                sql = sql.Replace("@nombre", request.Nombre);
-
-                cmd.CommandText = sql;
-
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-                response.OK = "Autor actualizado correctamente.";
-
-                var autor = new Autor();
-                autor.Id = request.Id;
-                autor.Nombre = request.Nombre;
-                response.Data = autor;
-
-            }
-            catch (Exception ex)
-            {
-                response.Error = "Error al actualizar." + ex.Message;
-            }
-            finally { connection.Close(); }
-            return response;
-        }
-
-        public Response deleteAutor(Request request)
-        {
-            var response = new Response();
-            try
-            {
-                var cmd = connection.CreateCommand();
-                var sql = @"call deleteAutor(@id)";
+                var sql = @"call deleteTema(@id)";
                 sql = sql.Replace("@id", request.Id.ToString());
 
                 cmd.CommandText = sql;
@@ -109,16 +109,17 @@ namespace ProbandoAPIRest.Sql
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
-                response.OK = "Autor eliminado con éxito.";
+                response.OK = "Tema eliminado con éxito.";
 
             }
             catch (Exception ex)
             {
-                response.Error = "Error al eliminar Autor: " + ex.Message;
+                response.Error = "Error al eliminar Tema: " + ex.Message;
             }
             finally { connection.Close(); }
             return response;
         }
+
 
     }
 }

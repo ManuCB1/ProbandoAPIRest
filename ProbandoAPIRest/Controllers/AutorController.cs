@@ -13,34 +13,34 @@ namespace ProbandoAPIRest.Controllers
     public class AutorController : ApiController
     {
         //Peticiones a https://localhost:44371/api/autor/autor-controller
-        private DTO_Autor DTO = new DTO_Autor();
+        private DAO_Autor DAO = new DAO_Autor();
 
         [HttpGet]
         [Route("autor-controller")]
         public List<Autor> getAutores()
         {
-            return DTO.getAutores();
+            return DAO.getAutores();
         }
 
         [HttpPut]
         [Route("autor-controller")]
         public Response putAutor(Request request)
         {
-            return DTO.putAutor(request);
+            return DAO.putAutor(request);
         }
 
         [HttpPost]
         [Route("autor-controller")]
         public Response postAutor(Request request)
         {
-            return DTO.postAutor(request);
+            return DAO.postAutor(request);
         }
 
         [HttpDelete]
         [Route("autor-controller")]
         public Response deleteAutor(Request request)
         {
-            return DTO.deleteAutor(request);
+            return DAO.deleteAutor(request);
         }
 
     }

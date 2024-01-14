@@ -178,6 +178,7 @@
     <Compile Include="Controllers\AutorController.cs" />
     <Compile Include="Controllers\EdicionController.cs" />
     <Compile Include="Controllers\FormatoController.cs" />
+    <Compile Include="Controllers\LibrosController.cs" />
     <Compile Include="Controllers\TemaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -185,6 +186,7 @@
     <Compile Include="Models\Autor.cs" />
     <Compile Include="Models\Edicion.cs" />
     <Compile Include="Models\Formato.cs" />
+    <Compile Include="Models\Libro.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Tema.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Sql\DAO_Autor.cs" />
     <Compile Include="Sql\DAO_Edicion.cs" />
     <Compile Include="Sql\DAO_Formato.cs" />
+    <Compile Include="Sql\DAO_Libro.cs" />
     <Compile Include="Sql\DAO_Tema.cs" />
     <Compile Include="Sql\GetConnectionDAO.cs" />
   </ItemGroup>
